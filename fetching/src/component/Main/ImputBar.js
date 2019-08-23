@@ -1,8 +1,7 @@
 import React from 'react';
-import './ImputBar.css';
 
 
-const Imput = (props) => {
+const Tarea = (props) => {
 
     return (
 
@@ -12,4 +11,4 @@ const Imput = (props) => {
     )
 }
 
-export default Imput;
+export default Tarea;

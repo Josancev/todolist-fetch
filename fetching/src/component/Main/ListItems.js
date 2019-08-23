@@ -1,7 +1,6 @@
 import React from 'react';
-import './ListItems.css';
 
-const ListItems = (props) => {
+const TaskList = (props) => {
     
     
         const ListComponent = props.lists.map((ls, index) => {
@@ -19,4 +18,4 @@ const ListItems = (props) => {
     )
 }
 
-export default ListItems
+export default TaskList

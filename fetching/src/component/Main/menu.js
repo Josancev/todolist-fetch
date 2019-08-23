@@ -1,8 +1,8 @@
 import React from 'react';
-import './user.css';
 
 
-const Nav = (props) => {
+
+const Menu = (props) => {
     return (
         <div className="user">
             <div>
@@ -19,4 +19,4 @@ const Nav = (props) => {
     )
 }
 
-export default Nav;
+export default Menu;

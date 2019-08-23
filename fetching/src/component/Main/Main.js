@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import Nav from './User/nav';
-import Imputuser from './User/inputuser';
-import Imput from './ImputBar/ImputBar';
-import ListItems from './ListItems/ListItems';
+import Menu from './menu';
+import LogUser from './inputuser';
+import Task from './Todo';
+import TaskList from './tasklist';
 import Footer from '../Footer/Footer';
 
 class Main extends Component {
@@ -11,11 +11,11 @@ class Main extends Component {
         this.state = {
             userNoRegister: false,
             inpuList: '',
-            listsServer: [{"label": "sample task", done: false}],
+            listsServer: [{ "label": "sample task", done: false }],
             lists: [],
             newUser: '',
-            User: 'demo',
-            isExpand: false
+            User: 'Test',
+            // isExpand: false
         }
     }
 
@@ -56,8 +56,8 @@ class Main extends Component {
 
     deletLi = async (i) => {
         let id = this.state.User;
-            await this.deletList(i);
-            this.updateData(id);
+        await this.deletList(i);
+        this.updateData(id);
     }
 
     handleToggle = (e) => {
@@ -83,21 +83,21 @@ class Main extends Component {
 
     refreshData(id) {
         fetch(`https://assets.breatheco.de/apis/fake/todos/user/${id}`)
-        .then(res => res.json())
-        .then(json => {
-            this.setState({
-                isExpand: false,
-                User: this.state.newUser,
-                newUser: '',
-                lists: json.slice(1)
+            .then(res => res.json())
+            .then(json => {
+                this.setState({
+                    isExpand: false,
+                    User: this.state.newUser,
+                    newUser: '',
+                    lists: json.slice(1)
+                })
+
+
+
             })
-
-
-
-        })
-        .catch(error => {
-            console.log(error);
-        });
+            .catch(error => {
+                console.log(error);
+            });
     }
 
     userExist(id) {
@@ -105,17 +105,17 @@ class Main extends Component {
         fetch(`https://assets.breatheco.de/apis/fake/todos/user/${id}`, {
             method: "GET"
         })
-        .then(resp => {
-            if (resp.ok) {
-                this.refreshData(id);
-            }
-            else {
-                this.createUser(this.state.newUser);
-            }
-        })
-        .catch(error => {
-            console.log(error);
-        });
+            .then(resp => {
+                if (resp.ok) {
+                    this.refreshData(id);
+                }
+                else {
+                    this.createUser(this.state.newUser);
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }
 
 
@@ -127,14 +127,14 @@ class Main extends Component {
                 "Content-Type": "application/json"
             }
         })
-        .then(resp => {
-            if (resp.ok) {
-                this.refreshData(usr);
-            }
-        })
-        .catch(error => {
-            console.log(error);
-        });
+            .then(resp => {
+                if (resp.ok) {
+                    this.refreshData(usr);
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }
 
     deleteUser = () => {
@@ -144,25 +144,25 @@ class Main extends Component {
         fetch(`https://assets.breatheco.de/apis/fake/todos/user/${id}`, {
             method: "DELETE",
         })
-        .then(resp => {
-            if (resp.ok) {
-                this.setState({
-                    newUser: '',
-                    isExpand: false,
-                    User: 'demo',
-                    lists: []
-                });
-            }
-        })
-        .catch(error => {
-            console.log(error);
-        });
+            .then(resp => {
+                if (resp.ok) {
+                    this.setState({
+                        newUser: '',
+                        isExpand: false,
+                        User: 'Test',
+                        lists: []
+                    });
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            });
     }
 
 
     updateData(usr) {
 
-         let newArray = this.state.listsServer.concat(this.state.lists);
+        let newArray = this.state.listsServer.concat(this.state.lists);
 
         fetch(`https://assets.breatheco.de/apis/fake/todos/user/${usr}`, {
             method: "PUT",
@@ -171,51 +171,56 @@ class Main extends Component {
                 "Content-Type": "application/json"
             }
         })
-        .catch(error => {
-            console.log(error);
-        });
+            .catch(error => {
+                console.log(error);
+            });
     }
 
     render() {
 
-        const { isExpand } = this.state;
+        //const { isExpand } = this.state;
 
         return (
             <div>
                 <div className="user">
-                    <Nav
-                        handleToggle = {this.handleToggle}
-                        User = {this.state.User}
-                        deleteUser = {this.deleteUser}
-                    />
-                </div>
-                <div className={`panel  ${isExpand  ? 'panelExtend' : 'panel'}`}>
+
                     <div className="center">
-                        <Imputuser
+                        <LogUser
                             newUser={this.state.newUser}
-                            handleUser = {this.handleUser}
+                            handleUser={this.handleUser}
                             newUserChanged={this.newUserChanged}
                         />
                     </div>
+
+                    <Menu
+                        handleToggle={this.handleToggle}
+                        User={this.state.User}
+                        deleteUser={this.deleteUser}
+                    />
+
+
                 </div>
+
+
+
                 <div>
-                    <Imput
+                    <Task
                         inpuList={this.state.inpuList}
-                        handleList = {this.handleList}
+                        handleList={this.handleList}
                         inpuListChanged={this.inpuListChanged}
                     />
                 </div>
                 <div>
-                    <ListItems
+                    <TaskList
                         lists={this.state.lists}
-                        deletLi= {this.deletLi}
+                        deletLi={this.deletLi}
                     />
                 </div>
-                <div className="count">
-        	        <Footer
-            	         lists={this.state.lists}
-        	        />
-            	</div>
+                <div >
+                    <Footer
+                        lists={this.state.lists}
+                    />
+                </div>
             </div>
         );
     }

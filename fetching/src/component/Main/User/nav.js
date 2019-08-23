@@ -6,13 +6,13 @@ const Nav = (props) => {
     return (
         <div className="user">
             <div>
-                <strong className="change" onClick={props.handleToggle}>Change User</strong>
+                <strong className="change" onClick={props.handleToggle}>Cambiar Usuario</strong>
             </div>
             <div>
-                <p className="parrafo">user: <strong>{props.User}</strong></p>
+                <p className="parrafo">Usuario: <strong>{props.User}</strong></p>
             </div>
             <div>
-                <strong className="alert" onClick={props.deleteUser}>Delete User</strong>
+                <strong className="alert" onClick={props.deleteUser}>Eliminar Usuario</strong>
             </div>
 
         </div>

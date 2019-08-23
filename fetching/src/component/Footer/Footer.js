@@ -5,7 +5,7 @@ const Footer = (props) => {
 
     return (
         <div>
-            <div className="count">{props.lists.length} item left</div>
+            <div className="count">{props.lists.length} Tareas Restantes</div>
         </div>
     )
 }
